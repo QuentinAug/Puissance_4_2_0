@@ -73,6 +73,7 @@ public class Partie {
     public void debuterPartie(){
         
         while(grille.etreGagnantePourJoueur(joueurCourant)==false || grille.etreRemplie()==false){
+            grille.afficherGrilleSurConsole();
             
             if(joueurCourant==ListeJoueurs[0]){
                 joueurCourant=ListeJoueurs[1];

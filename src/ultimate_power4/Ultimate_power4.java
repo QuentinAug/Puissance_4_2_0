@@ -30,7 +30,7 @@ public class Ultimate_power4 {
         Partie partie1=new Partie(joueur1,joueur2); //on créé une nouvelle partie
         partie1.attribuerCouleursAuxJoueurs();
         partie1.initialiserPartie();
-        partie1.debuterPartie();
+        partie1.debuterPartie(); 
     }
     
 }

@@ -18,6 +18,7 @@ public class Joueur {
 
     public Joueur(String NomJ) {
         Nom = NomJ;
+        nombreJetonsRestants=21;
     }
 
     public void affecterCouleur(String NomCouleur) {
