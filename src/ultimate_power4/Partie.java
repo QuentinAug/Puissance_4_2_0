@@ -36,10 +36,10 @@ public class Partie {
         int nb_trouN = 5;  //nombre de trous noirs à placer
         int nb_Des = 5;  //nb de désintégrateur à placer
         boolean test_T, test_D; //tester si l'ajoue de trou noir/désintégrateur est possible
-        while (nb_trouN != 0 && nb_Des != 0) {  //
+        while (nb_trouN != 0 || nb_Des != 0) {  //
             int i = (int) (Math.random() * 5);
             int j = (int) (Math.random() * 6);  //on génère des coordonnées aléatoires
-            if (nb_trouN != 0) {
+            if (nb_trouN !=0) {
                 test_T = grille.placerTrouNoir(i, j);  //on fait le test
                 if (test_T == true && nb_Des > 3) {  //cas où on peut placer trou noir et désintégrateur sur la meme case 
                     grille.placerTrouNoir(i, j);
@@ -52,12 +52,13 @@ public class Partie {
                     grille.placerTrouNoir(i, j);
                     nb_trouN--;
                 }
-            } else { //cas où on a placé tous les trous noirs et où l'on place les désintégrateurs restants sur d'autres cases
-                test_T = grille.placerTrouNoir(i, j);
+            }
+            else { //cas où on a placé tous les trous noirs et où l'on place les désintégrateurs restants sur d'autres cases
+                test_T = grille.Grille[i][j].trouNoir;
                 test_D = grille.placerDesintegrateur(i, j);
                 if (test_D == true && test_T == false) { //cas favorable à celà
                     grille.placerDesintegrateur(i, j);
-                    nb_Des--;
+                    nb_Des--;                  
                 }
             }
         }
@@ -86,15 +87,26 @@ public class Partie {
             if(joueurCourant.nombreJetonsRestants!=0){
                 System.out.println("choisissez une colonne où jouer");
                 Scanner sc = new Scanner(System.in);
-                int colonne = sc.nextInt();
-
-                while(grille.colonneRemplie(colonne)==true || (colonne<1 && colonne>7)){
-                    System.out.println("colonne pleine");
-                    System.out.println("choisissez une autre colonne où jouer");
-                    colonne = sc.nextInt();
+                System.out.println("Souhaitez vous jouer un jeton ou en récupérer un?\n 1/placer un jeton      2/Récupérere un jeton");
+                int Rep_Joueur = sc.nextInt();
+                if (Rep_Joueur==2){
+                    System.out.println("Sélectionner la ligne puis la colonne du jeton à récupérer");
+                    System.out.println("ligne: ");
+                    int lig = sc.nextInt();
+                    int col = sc.nextInt();
+                    grille.recupererJeton(lig,col);
                 }
-                grille.ajouterJetonDansColonne(joueurCourant.ListeJetons[0], colonne);
-                joueurCourant.nombreJetonsRestants--;
+                if (Rep_Joueur==1){
+                    int colonne = sc.nextInt();
+
+                    while(grille.colonneRemplie(colonne)==true || (colonne<1 && colonne>7)){
+                        System.out.println("colonne pleine");
+                        System.out.println("choisissez une autre colonne où jouer");
+                        colonne = sc.nextInt();
+                    }
+                    grille.ajouterJetonDansColonne(joueurCourant.ListeJetons[0], colonne);
+                    joueurCourant.nombreJetonsRestants--;
+                }
             }   
             //o++;
         }

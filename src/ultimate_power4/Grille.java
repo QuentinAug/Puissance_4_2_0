@@ -66,7 +66,7 @@ public class Grille {
                 if (Grille[i][j].jetonCourant != null) {
                     System.out.print(Grille[i][j].jetonCourant.couleur);
                 } else {
-                    if (Grille[i][j].trouNoir == true) {
+                    if (Grille[i][j].trouNoir == true) { 
                         System.out.print("T");
                     } else {
                         if(Grille[i][j].desintegrateur==true){
@@ -177,6 +177,8 @@ public class Grille {
     public jeton recupererJeton(int a, int b) {
         jeton retour_J = Grille[a][b].jetonCourant;
         supprimerJeton(a, b);
+        tasserGrille(a,b);
+        
         return retour_J;
     }
 }
