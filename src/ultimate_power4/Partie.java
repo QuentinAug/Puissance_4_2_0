@@ -71,8 +71,9 @@ public class Partie {
     }
     
     public void debuterPartie(){
-        
-        while(grille.etreGagnantePourJoueur(joueurCourant)==false || grille.etreRemplie()==false){
+        //int o=0;
+        //while(o<10){
+        while(grille.etreGagnantePourJoueur(joueurCourant)==false && grille.etreRemplie()==false){
             grille.afficherGrilleSurConsole();
             
             if(joueurCourant==ListeJoueurs[0]){
@@ -94,7 +95,8 @@ public class Partie {
                 }
                 grille.ajouterJetonDansColonne(joueurCourant.ListeJetons[0], colonne);
                 joueurCourant.nombreJetonsRestants--;
-            }           
+            }   
+            //o++;
         }
         if (grille.etreGagnantePourJoueur(joueurCourant)==true){
             System.out.println(joueurCourant.Nom + " a gagné");
