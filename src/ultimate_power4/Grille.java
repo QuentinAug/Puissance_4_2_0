@@ -24,13 +24,13 @@ public class Grille {
     public boolean ajouterJetonDansColonne(jeton Jeton, int colonne) {
         int i = 5;
         while (i >= 0) {
-            if (Grille[i][colonne]!= null && Grille[i][colonne].jetonCourant == null) {
-                if(Grille[i][colonne].trouNoir==false){
+            if (Grille[i][colonne].jetonCourant == null) {
+                if (Grille[i][colonne].trouNoir == false) {
                     Grille[i][colonne].jetonCourant = Jeton;
+                } else {
+                    Grille[i][colonne].trouNoir = false;
                 }
-                else{
-                    Grille[i][colonne].trouNoir=false; 
-                }
+
                 return true;
             }
 
@@ -64,15 +64,19 @@ public class Grille {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
                 if (Grille[i][j].jetonCourant != null) {
-                    System.out.print(Grille[i][j].jetonCourant.couleur);
+                    if(Grille[i][j].jetonCourant.couleur=="rouge"){
+                        System.out.print("R");
+                    }
+                    else{
+                       System.out.print("J"); 
+                    }
                 } else {
-                    if (Grille[i][j].trouNoir == true) { 
+                    if (Grille[i][j].trouNoir == true) {
                         System.out.print("T");
                     } else {
-                        if(Grille[i][j].desintegrateur==true){
+                        if (Grille[i][j].desintegrateur == true) {
                             System.out.print("D");
-                        }
-                        else{
+                        } else {
                             System.out.print(" ");
                         }
                     }
@@ -122,12 +126,12 @@ public class Grille {
                 }
             }
         }
-        for (int i=0;i<3;i++){           
-            for (int j=6;j>2;j--){
-                if(Grille[i][j].jetonCourant!=null && Grille[i+1][j-1].jetonCourant!=null && Grille[i+2][j-2].jetonCourant!=null && Grille[i+3][j-3].jetonCourant!=null){
-                    if (joueur.Couleur==Grille[i][j].jetonCourant.couleur && joueur.Couleur==Grille[i+1][j-1].jetonCourant.couleur &&joueur.Couleur==Grille[i+2][j-2].jetonCourant.couleur&&joueur.Couleur==Grille[i+3][j-3].jetonCourant.couleur){
+        for (int i = 0; i < 3; i++) {
+            for (int j = 6; j > 2; j--) {
+                if (Grille[i][j].jetonCourant != null && Grille[i + 1][j - 1].jetonCourant != null && Grille[i + 2][j - 2].jetonCourant != null && Grille[i + 3][j - 3].jetonCourant != null) {
+                    if (joueur.Couleur == Grille[i][j].jetonCourant.couleur && joueur.Couleur == Grille[i + 1][j - 1].jetonCourant.couleur && joueur.Couleur == Grille[i + 2][j - 2].jetonCourant.couleur && joueur.Couleur == Grille[i + 3][j - 3].jetonCourant.couleur) {
                         return true;
-                    }     
+                    }
                 }
             }
         }
@@ -135,11 +139,18 @@ public class Grille {
 
     }
 
-    public void tasserGrille(int ligne, int colonne) {
-        for (int i = ligne; i < 1; i--) {
-            Grille[i][colonne] = Grille[i - 1][colonne];
+    public void tasserGrille(int colonne) {
+        int ligne = 5;
+        while (Grille[ligne][colonne].jetonCourant != null) {
+            ligne--;
         }
-        Grille[0][colonne].supprimerJeton();
+        int i;
+        jeton j;
+        for (i = ligne; i > 0; i--) {
+            j = Grille[i - 1][colonne].jetonCourant;
+            Grille[i][colonne].jetonCourant = j;
+        }
+        Grille[i][colonne].supprimerJeton();
     }
 
     public boolean colonneRemplie(int colonne) {
@@ -177,8 +188,19 @@ public class Grille {
     public jeton recupererJeton(int a, int b) {
         jeton retour_J = Grille[a][b].jetonCourant;
         supprimerJeton(a, b);
-        tasserGrille(a,b);
-        
+        tasserGrille(b);
+
         return retour_J;
+    }
+    
+    public boolean jetonPrésentDansGrille(jeton Jeton){ //prend en argument un jeton et regarde si il est présent au moins une fois dans la grille et retourne alors vrai
+        for (int i=0;i<6;i++){
+            for(int j=0;j<7;j++){
+                if(Grille[i][j].jetonCourant==Jeton){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

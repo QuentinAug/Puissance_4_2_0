@@ -5,7 +5,6 @@ package ultimate_power4;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author cinga
@@ -18,7 +17,7 @@ public class Joueur {
 
     public Joueur(String NomJ) {
         Nom = NomJ;
-        nombreJetonsRestants=21;
+        nombreJetonsRestants = 21;
     }
 
     public void affecterCouleur(String NomCouleur) {
@@ -33,21 +32,19 @@ public class Joueur {
             break;
         }
     }
-    
-    public void obtenirDesintegrateur(){
+
+    public void obtenirDesintegrateur() {
         nombreDesintegrateurs++;
     }
-    
-    public boolean utiliserDesintegrateur(){
-        if (nombreDesintegrateurs>0){
+
+    public boolean utiliserDesintegrateur() {
+        if (nombreDesintegrateurs > 0) {
             nombreDesintegrateurs--;
             return true;
-        }
-        else{
+        } else {
             return false;
         }
-        
-        
+
     }
 
 }
