@@ -63,7 +63,7 @@ public class Grille {
     public void afficherGrilleSurConsole() {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
-                if (Grille[i][j].jetonCourant != null) {
+                if (Grille[i][j].jetonCourant != null) { //on affiche la couleur du jeton
                     if(Grille[i][j].jetonCourant.couleur=="rouge"){
                         System.out.print("R");
                     }
@@ -71,7 +71,7 @@ public class Grille {
                        System.out.print("J"); 
                     }
                 } else {
-                    if (Grille[i][j].trouNoir == true) {
+                    if (Grille[i][j].trouNoir == true) { //on affiche les trou noir par dessus les désintégrateurs
                         System.out.print("T");
                     } else {
                         if (Grille[i][j].desintegrateur == true) {
@@ -81,9 +81,9 @@ public class Grille {
                         }
                     }
                 }
-                System.out.print("|");
+                System.out.print("|");//on symbolise les colonnes par |
             }
-            System.out.print("\n");
+            System.out.print("\n");//saut à la ligne apres chaque ligne
         }
     }
 
@@ -99,16 +99,16 @@ public class Grille {
     }
 
     public boolean etreGagnantePourJoueur(Joueur joueur) {
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 4; j++) {
-                if (Grille[i][j].jetonCourant != null && Grille[i][j + 1].jetonCourant != null && Grille[i][j + 2].jetonCourant != null && Grille[i][j + 3].jetonCourant != null) {
+        for (int i = 0; i < 6; i++) { //on regarde ici si 4 jetons du joueur sont allignés horizontalement
+            for (int j = 0; j < 4; j++) { //pour celà on parcourt la grille par combinaisons de 4 jetons, c'est pourquoi i et j ne couvrent pas la totalité de la grille
+                if (Grille[i][j].jetonCourant != null && Grille[i][j + 1].jetonCourant != null && Grille[i][j + 2].jetonCourant != null && Grille[i][j + 3].jetonCourant != null) { //ligne de sécurité pour vérifier que les 4 cases ne sont pas vides
                     if (joueur.Couleur == Grille[i][j].jetonCourant.couleur && joueur.Couleur == Grille[i][j + 1].jetonCourant.couleur && joueur.Couleur == Grille[i][j + 2].jetonCourant.couleur && joueur.Couleur == Grille[i][j + 3].jetonCourant.couleur) {
                         return true;
                     }
                 }
             }
         }
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) { // de meme pour les colonnes
             for (int j = 0; j < 7; j++) {
                 if (Grille[i][j].jetonCourant != null && Grille[i + 1][j].jetonCourant != null && Grille[i + 2][j].jetonCourant != null && Grille[i + 3][j].jetonCourant != null) {
                     if (joueur.Couleur == Grille[i][j].jetonCourant.couleur && joueur.Couleur == Grille[i + 1][j].jetonCourant.couleur && joueur.Couleur == Grille[i + 2][j].jetonCourant.couleur && joueur.Couleur == Grille[i + 3][j].jetonCourant.couleur) {
@@ -117,7 +117,7 @@ public class Grille {
                 }
             }
         }
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) { //de meme pour les diagonales d'en hant à gauche à en bas à droite
             for (int j = 0; j < 4; j++) {
                 if (Grille[i][j].jetonCourant != null && Grille[i + 1][j + 1].jetonCourant != null && Grille[i + 2][j + 2].jetonCourant != null && Grille[i + 3][j + 3].jetonCourant != null) {
                     if (joueur.Couleur == Grille[i][j].jetonCourant.couleur && joueur.Couleur == Grille[i + 1][j + 1].jetonCourant.couleur && joueur.Couleur == Grille[i + 2][j + 2].jetonCourant.couleur && joueur.Couleur == Grille[i + 3][j + 3].jetonCourant.couleur) {
@@ -126,7 +126,7 @@ public class Grille {
                 }
             }
         }
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) { //de meme pour les diagonales d'en bas à gauche à en haut à droite
             for (int j = 6; j > 2; j--) {
                 if (Grille[i][j].jetonCourant != null && Grille[i + 1][j - 1].jetonCourant != null && Grille[i + 2][j - 2].jetonCourant != null && Grille[i + 3][j - 3].jetonCourant != null) {
                     if (joueur.Couleur == Grille[i][j].jetonCourant.couleur && joueur.Couleur == Grille[i + 1][j - 1].jetonCourant.couleur && joueur.Couleur == Grille[i + 2][j - 2].jetonCourant.couleur && joueur.Couleur == Grille[i + 3][j - 3].jetonCourant.couleur) {
@@ -141,16 +141,16 @@ public class Grille {
 
     public void tasserGrille(int colonne) {
         int ligne = 5;
-        while (Grille[ligne][colonne].jetonCourant != null) {
-            ligne--;
+        while (Grille[ligne][colonne].jetonCourant != null) { //ici on cherche la ligne ou un jeton a été supprimé
+            ligne--; //afin de décaler d'une case vers le bas toute la colonne au dessus de cette ligne
         }
         int i;
         jeton j;
-        for (i = ligne; i > 0; i--) {
+        for (i = ligne; i > 0; i--) { //on copie la case superieur dans la case courante
             j = Grille[i - 1][colonne].jetonCourant;
             Grille[i][colonne].jetonCourant = j;
         }
-        Grille[i][colonne].supprimerJeton();
+        Grille[i][colonne].supprimerJeton(); //la derniere case est forcement vide
     }
 
     public boolean colonneRemplie(int colonne) {

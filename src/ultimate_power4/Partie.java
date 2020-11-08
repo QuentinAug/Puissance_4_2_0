@@ -46,7 +46,7 @@ public class Partie {
                     test_T = false;
                     grille.placerDesintegrateur(i, j);
                 }
-                if (test_T == true) { //cas où on a placé 2 désintégrateur et on place les autres trous noirs
+                if (test_T == true) { //cas où on a placé 2 désintégrateurs et on place les autres trous noirs
                     grille.placerTrouNoir(i, j);
                     nb_trouN--;
                 }
@@ -75,22 +75,22 @@ public class Partie {
     public void debuterPartie() {
         //int o=0;
         //while(o<10){
-        while (grille.etreGagnantePourJoueur(joueurCourant) == false && grille.etreRemplie() == false) {
-            grille.afficherGrilleSurConsole();
+        while (grille.etreGagnantePourJoueur(joueurCourant) == false && grille.etreRemplie() == false) { //conditions pour lesquelles le jeu s'arrete
+            grille.afficherGrilleSurConsole(); //on affiche la grille
 
-            if (joueurCourant == ListeJoueurs[0]) {
+            if (joueurCourant == ListeJoueurs[0]) { //on change de joueur à chaque tour de boucle
                 joueurCourant = ListeJoueurs[1];
             } else {
                 joueurCourant = ListeJoueurs[0];
             }
 
             int Rep_Joueur;   //variable réponse du joueur
-            if (joueurCourant.nombreJetonsRestants != 0) {
+            if (joueurCourant.nombreJetonsRestants != 0) { //si il reste des jetons au joueur
                 Scanner sc = new Scanner(System.in);
                 
                 boolean Test_Jeton = grille.jetonPrésentDansGrille(joueurCourant.ListeJetons[0]);//pour tester si le joueur possède au moins 1 jeton sur la grille
                 
-                if (Test_Jeton==true) { 
+                if (Test_Jeton==true) { //si le joueur en possede au moins 1 sur la grille
                     System.out.println(joueurCourant.Nom +"("+joueurCourant.Couleur+")"+" Souhaitez vous jouer un jeton ou en récupérer un?\n 1/placer un jeton      2/Récupérere un jeton");
                     if (joueurCourant.nombreDesintegrateurs > 0) {
                         System.out.println("Ou bien encore en ANHIHILER en EXPLOSER en ATOMISER un???\n 3/Désintégrer un jeton");
@@ -99,7 +99,7 @@ public class Partie {
                 } else {
                     Rep_Joueur = 1; //on passe directement à l'ajout du jeton
                 }
-                if (Rep_Joueur == 2) {  //boucle récupérer jeton
+                if (Rep_Joueur == 2) {  //boucle récupérer un jeton
                     System.out.println("Sélectionnez la ligne puis la colonne du jeton à récupérer");
                     System.out.println("ligne: ");
                     int lig = sc.nextInt() - 1;
@@ -125,16 +125,16 @@ public class Partie {
                         colonne = sc.nextInt();
                     }
 
-                    while (grille.colonneRemplie(colonne) == true) {
+                    while (grille.colonneRemplie(colonne) == true) { //vérifie si la colonne est pleine
                         System.out.println("colonne pleine");
                         System.out.println("choisissez une autre colonne où jouer");
                         colonne = sc.nextInt();
                     }
                     int i = 5;
-                    while (i > 0 && grille.Grille[i][colonne].jetonCourant != null) {
+                    while (i > 0 && grille.Grille[i][colonne].jetonCourant != null) { //trouver la ligne ou placer le jeton et de vérifier si il y a un désintégrateur
                         i--;
                     }
-                    if (grille.Grille[i][colonne].desintegrateur == true) {
+                    if (grille.Grille[i][colonne].desintegrateur == true) { //désintégrateur présent
                         grille.Grille[i][colonne].recupererDesintegrateur();
                         joueurCourant.nombreDesintegrateurs++;
                     }
@@ -143,14 +143,14 @@ public class Partie {
                     joueurCourant.nombreJetonsRestants--;
                 }
 
-                if (Rep_Joueur == 3) {
-                    if (joueurCourant.nombreDesintegrateurs > 0) {  //boucle du désintégrateur
+                if (Rep_Joueur == 3) { //desintégrer un jeton (si le joueur possede un désintégrateur)
+                    if (joueurCourant.nombreDesintegrateurs > 0) {  //si il en possede
                         System.out.println("Saisissez les coodonnées du jeton à DESINTEGRER");
                         System.out.println("ligne: ");
                         int lig = sc.nextInt() - 1;
                         System.out.println("colonne: ");
                         int col = sc.nextInt() - 1;
-                        while (grille.Grille[lig][col].jetonCourant == null || grille.Grille[lig][col] == null) {
+                        while (grille.Grille[lig][col].jetonCourant == null || grille.Grille[lig][col] == null) {//s'execute tant que commande invalide
                             System.out.println("Jeton inexistant, sélectionnez la ligne puis la colonne du jeton à DESINTEGRER");
                             System.out.println("ligne: ");
                             lig = sc.nextInt() - 1;
@@ -160,8 +160,8 @@ public class Partie {
                         grille.Grille[lig][col].supprimerJeton();
                         joueurCourant.utiliserDesintegrateur();
                         grille.tasserGrille(col);
-                    } else { //si un joueur qui n'a pas de desintégrateur rentre 3 alors on passe au joueur 
-                        //suivant dans le but qu'au prochain tour en réinversant les joueur ce joueur puisse rejouer
+                    } else { //si un joueur qui n'a pas de desintégrateur rentre 3, alors on passe au joueur 
+                        //suivant, dans le but qu'au prochain tour en changeant de joueur ce joueur puisse rejouer
                         if (joueurCourant == ListeJoueurs[0]) {
                             joueurCourant = ListeJoueurs[1];
                         } else {
@@ -169,7 +169,7 @@ public class Partie {
                         }
                     }
                 }
-                if (Rep_Joueur != 1 && Rep_Joueur != 2 && Rep_Joueur != 3) {
+                if (Rep_Joueur != 1 && Rep_Joueur != 2 && Rep_Joueur != 3) {//si la commande est invalide, on change de joueur pour qu'au tour de boucle suivant ce meme joueur puisse rejouer une autre commande
                     if (joueurCourant == ListeJoueurs[0]) {
                         joueurCourant = ListeJoueurs[1];
                     } else {

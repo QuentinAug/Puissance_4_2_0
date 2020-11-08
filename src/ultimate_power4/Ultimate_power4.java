@@ -19,7 +19,7 @@ public class Ultimate_power4 {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        System.out.println("Nom joueur 1");
+        System.out.println("Nom joueur 1"); //rentrer noms des joueurs
         String Nom_J1 = sc.nextLine();
         System.out.println("Nom joueur 2");
         String Nom_J2 = sc.nextLine();
